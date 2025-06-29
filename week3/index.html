@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom - exmaple</title>
+</head>
+
+<body>
+    <script>
+        async function populateDiv() {
+
+            // connected to backend so now first run teh sum .js then run this here 
+            // so now this is used to calculate the sum here 
+
+            const a = document.getElementById("firstnumber").value;
+            const b = document.getElementById("secondnumber").value;
+
+            const response = await fetch("http://localhost:3000/?a=" + a + "&b=" + b);  // fetching from somewhere else
+            const ans = await response.text();// this beacause respose is also promisfied here 
+
+            document.getElementById("finalsum").innerHTML = ans;
+            // console.log(element);
+            // element.innerHTML = ans
+            // element.innerHTML = parseInt(a) + parseInt(b); // function convert string to integer 
+        }
+        async function findsi() {
+            const a = document.getElementById("principal").value;
+            const b = document.getElementById("rate").value;
+            const c = document.getElementById("time").value;
+
+            const response = await fetch("http://localhost:3000/intrest?a=" + a + "&b=" + b + "&c=" + c);
+            const ans = await response.text();
+
+            document.getElementById("simpleintrest").innerHTML = ans;
+        }
+    </script>
+
+    <input id="firstnumber" type="number" placeholder="enter the first number"></input> <br></br>
+    <input id="secondnumber" type="number" placeholder="enter the second number"></input> <br></br>
+    <button onclick="populateDiv()">calculate sum </button>
+    <div id="finalsum"></div>
+
+    <div>
+        <p> so now here is the simple </p>
+    </div>
+    <input id="principal" type="number" placeholder="enter the principal amount"></input> <br>
+    <input id="rate" type="number" placeholder="enter the rate"> <br>
+    <input id="time" type="number" placeholder="enter the time"> <br>
+    <button onclick="findsi()"> find simple intrest </button> <br>
+    <div id="simpleintrest"></div>
+</body>
+
+</html>
