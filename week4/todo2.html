@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    // so now here we will write the another way by which we can add the todo here 
+    let globalid = 1; // we will maintain the global id here 
+    function addtodo() {
+        // so now here it will get the value of tilte and description here 
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const parent = document.getElementById("container");
+        parent.appendChild(creatchild(title, description, globalid++));
+    }
+    // so now here is the function create child which will create the child here 
+    function creatchild(tilte, description, id) {
+        // so now we will create the all of the div using the dom here 
+        const child = document.createElement("div");
+        const firstGrandChild = document.createElement("div");
+        firstGrandChild.innerHTML = tilte;
+        const secondGrandChild = document.createElement("div");
+        secondGrandChild.innerHTML = description;
+        const thirdGrandChild = document.createElement("button");
+        thirdGrandChild.innerHTML = "mark as done";
+        // so now here we have to set the attribute of the button also here 
+        thirdGrandChild.setAttribute("onclick", `markasdone(${id})`);
+        // so now here append the all three grand childern inside it 
+        child.append(firstGrandChild, secondGrandChild, thirdGrandChild);
+        // as we have to set the id of child also here 
+        child.setAttribute("id", id);
+        return child; // as we are getting the value in above function 
+    }
+    function markasdone(todoid) {
+        // Get the child element using the ID
+        const child = document.getElementById(todoid);
+        // Find the button within the child element and change its text
+        child.children[2].innerHTML = "Done! "
+    }
+
+</script>
+
+<body>
+    <div>
+        <input id="title" type="text" placeholder="title"> <br>
+        <input id="description" type="text" placeholder="description"> <br>
+        <button onclick="addtodo()">add to to-do</button>
+    </div>
+    <br>
+    <div id="container">
+        <!-- so now here we will add the all of the todo here  -->
+    </div>
+</body>
+
+</html>
