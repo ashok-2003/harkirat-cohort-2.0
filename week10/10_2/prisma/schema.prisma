@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+// so now here we can also define our model which is equal to creating the table in he sql only 
+model User {
+  id       Int      @id @default(autoincrement())
+  username String   @unique
+  email    String   @unique
+  password String
+  created_at DateTime @default(now())
+  todos    Todo[] // represent that one to many relatiship here one user can have multiple todo 
+  addresses Address[] // represents that one to many one user can have multiple address also here
+
+  // The todos field in your User model is just a query helper (a virtual field), not an actual database column
+}
+
+model Todo {
+  id          Int     @id @default(autoincrement())
+  title       String
+  done        Boolean @default(false)
+  description String? // for making it optional 
+  user_id     Int     // foregin key
+  user        User    @relation(fields: [user_id], references: [id] , onDelete: Cascade) // so if the user is deleted 
+  // then the todo for that user is also get deleted 
+}
+
+model Address {
+  id      Int    @id @default(autoincrement()) // @id means the primary key for the data base 
+  city    String
+  state   String
+  pincode String
+  user_id Int // foregin key
+  user    User   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
