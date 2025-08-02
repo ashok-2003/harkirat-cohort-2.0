@@ -1,0 +1,17 @@
+syntax = "proto3"
+
+message Person{
+    string name = 1;
+    int32 age = 2;
+}
+
+service AddresBookService {
+    rpc AddPerson(person) return (person);
+
+    rpc GetPersonByName(GetPersonByNameRequest) return (person);
+
+}
+
+message GetPersonByNameRequest {
+    string name = 1;
+}
