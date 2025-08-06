@@ -1,5 +1,8 @@
 import express from "express"
 import { number, z } from "zod";
+import { prismaClient } from "./db";
+
+
 
 export const app = express();
 app.use(express.json());
@@ -8,6 +11,8 @@ const sumInput = z.object({
     a : z.number(),
     b : z.number(),
 })
+
+
 
 app.post("/sum" , (req , res) => {
     const parsedInput = sumInput.safeParse(req.body);
@@ -19,6 +24,16 @@ app.post("/sum" , (req , res) => {
         return;
     }
     const answer = parsedInput.data.a + parsedInput.data.b
+
+    prismaClient.sum.create({
+        data : {
+            a : parsedInput.data.a,
+            b : parsedInput.data.b,
+            result : answer
+        }
+    });
+
+
     res.status(200).json({
         answer
     })
@@ -39,6 +54,15 @@ app.get("/sum" , (req , res)=>{
     }
 
     const answer = parsedInput.data.a + parsedInput.data.b;
+
+    prismaClient.sum.create({
+        data : {
+            a : parsedInput.data.a,
+            b : parsedInput.data.b,
+            result : answer
+        }
+    });
+
     res.status(200).json({
         answer
     })
