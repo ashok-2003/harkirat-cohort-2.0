@@ -7,9 +7,11 @@ const express_1 = __importDefault(require("express"));
 const prom_client_1 = __importDefault(require("prom-client"));
 const requestCounter_1 = require("./monitoring/requestCounter");
 const activeRequest_1 = require("./monitoring/activeRequest");
+const requestTimeHistogram_1 = require("./monitoring/requestTimeHistogram");
 const app = (0, express_1.default)();
 app.use(requestCounter_1.requestCounter);
 app.use(activeRequest_1.ActiveRequestGauge);
+app.use(requestTimeHistogram_1.HttpRequestDurationHistogram);
 app.get('/user', (req, res) => {
     res.json({
         name: "ashok"

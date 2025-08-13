@@ -2,10 +2,12 @@ import express from "express";
 import client from "prom-client"
 import { requestCounter } from "./monitoring/requestCounter";
 import { ActiveRequestGauge } from "./monitoring/activeRequest";
+import { HttpRequestDurationHistogram } from "./monitoring/requestTimeHistogram";
 const app = express();
 
 app.use(requestCounter);
 app.use(ActiveRequestGauge)
+app.use(HttpRequestDurationHistogram)
 
 app.get('/user' , (req , res) => {
     res.json({

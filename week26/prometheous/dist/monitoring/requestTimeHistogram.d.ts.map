@@ -1,0 +1,1 @@
+{"version":3,"file":"requestTimeHistogram.d.ts","sourceRoot":"","sources":["../../src/monitoring/requestTimeHistogram.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,OAAO,EAAE,QAAQ,EAAE,YAAY,EAAE,MAAM,SAAS,CAAC;AAU1D,wBAAgB,4BAA4B,CAAC,GAAG,EAAE,OAAO,EAAE,GAAG,EAAE,QAAQ,EAAE,IAAI,EAAE,YAAY,QAiB3F"}
