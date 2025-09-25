@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-backend-config
+data:
+  # Simple key-value pairs
+  database_url: "jdbc:postgresql://db-service:5432/demo_db"
+  cache_size: "2048"
+  max_users: "5000"
+  session_timeout: "1800"
+
+  # File-like keys
+  application.properties: |
+    app.name=demo-backend
+    app.environment=staging
+    logging.level=DEBUG
+    max.connections=50
+
+  database.properties: |
+    db.driverClassName=org.postgresql.Driver
+    db.username=demo_user
+    db.password=demo_pass
+    db.maxPoolSize=15
+
+  cache.properties: |
+    cache.type=redis
+    cache.host=redis-service
+    cache.port=6379
+    cache.ttl=1200
+
+  payment.properties: |
+    gateway.url=https://sandbox-payments.example.com
+    gateway.apiKey=demo_api_key_12345
+    gateway.timeout=45
