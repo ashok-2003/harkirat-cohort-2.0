@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-backend
+  template:
+    metadata:
+      labels:
+        app: demo-backend
+    spec:
+      containers:
+        - name: demo-backend-container
+          image: nginx:latest   # replace with your app image
+          
+          # Load simple key-value pairs as env vars
+          envFrom:
+            - configMapRef:
+                name: demo-backend-config
+
+          # Mount file-like keys as actual files in the container
+          volumeMounts:
+            - name: config-volume
+              mountPath: /config
+
+      volumes:
+        - name: config-volume
+          configMap:
+            name: demo-backend-config
+            items:
+              - key: application.properties
+                path: application.properties
+              - key: database.properties
+                path: database.properties
+              - key: cache.properties
+                path: cache.properties
+              - key: payment.properties
+                path: payment.properties
