@@ -2,7 +2,6 @@ apiVersion: apps/v1  #deployment was later realse in apps/v1 api only
 kind: Deployment
 metadata:
   name: nginx-deployment 
-  namespace: backend  
 spec:
   replicas: 3
   selector:
