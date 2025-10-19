@@ -22,7 +22,7 @@ spec:
             def burn():
                 while True:
                     math.sqrt(9999999**2)
-            for _ in range(2):  # 2 CPU cores burn
+            for _ in range(4):  #4 CPU cores burn
                 threading.Thread(target=burn).start()
             threading.Event().wait()  # keep main thread alive
         resources:
