@@ -27,10 +27,10 @@ spec:
             threading.Event().wait()  # keep main thread alive
         resources:
           limits:
-            cpu: "1000m"
+            cpu: "1000m" # max limit of how much cpu it will take 
             memory: "256Mi"
           requests:
-            cpu: "500m"
+            cpu: "500m" # means required the half cpu minimum
             memory: "128Mi"
 ---
 apiVersion: v1
