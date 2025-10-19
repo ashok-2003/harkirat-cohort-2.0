@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cpu-load-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cpu-load
+  template:
+    metadata:
+      labels:
+        app: cpu-load
+    spec:
+      containers:
+      - name: cpu-burner
+        image: python:3.9-slim
+        command: ["python", "-c"]
+        args:
+          - |
+            import threading, math
+            def burn():
+                while True:
+                    math.sqrt(9999999**2)
+            for _ in range(2):  # 2 CPU cores burn
+                threading.Thread(target=burn).start()
+            threading.Event().wait()  # keep main thread alive
+        resources:
+          limits:
+            cpu: "1000m"
+            memory: "256Mi"
+          requests:
+            cpu: "500m"
+            memory: "128Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cpu-load-service
+spec:
+  selector:
+    app: cpu-load
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30009
+  type: NodePort
